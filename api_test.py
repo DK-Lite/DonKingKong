@@ -5,7 +5,7 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import urlopen, Request
 
 url = 'http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev'
-service_key = "&ServiceKey=aKVcsSF8UlpRkppSsPS38IZO8UZ87fNBzMTtrrWtoadmn7ySBos%2BX8AOc6M%2F47Temd2cIbpl4%2BFxq%2Btu0KoKWA%3D%3D"
+service_key = ""
 
 with open('./data/output.txt', 'r') as r_file:
     lines = r_file.readlines()
