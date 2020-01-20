@@ -20,11 +20,11 @@ def main():
 
     # data set
     apt = AptDetailReader(configs['service_key'])
-
     for code in codes:
-        for item in apt.DataReader(code, args.date):
-            if item is None: continue
-            requests.post("http://localhost:3691/data-lake/apt-trade-info", data=item.encode("utf-8"))
+        items = apt.DataReader(code, args.date)
+        if items is None: continue
+        for item in items:
+            requests.post("http://localhost:3691/data-lake/apt-trade-info", data=item)
 	
 
     #df_data = pd.concat([ apt.DataReader(code, args.date) for code in codes ], ignore_index=True)

@@ -24,26 +24,40 @@ class AptDetailReader:
         request.get_method = lambda: 'GET'
         response_body = urlopen(request).read().decode('utf8')
         
-        return self.__json2pd(xmltodict.parse(response_body))
-
-    def __json2pd(self, json_data):
-
+        json_data = xmltodict.parse(response_body)
         items = json_data['response']['body']['items']
         if items is None:
-            return pd.DataFrame()
+            return None
 
-        datas = items['item']
-        output = pd.DataFrame(columns=datas[0].keys())
-        for data in datas :
-            output = output.append(data, ignore_index=True)
+        return items['item']
+        
+    # def DataReaderToJSON(self, LAWD_CD, DEAL_YMD):
+    #     return self.DataReader(LAWD_CD, DEAL_YMD)
 
-        return output.copy()
+    # def DataReaderToDF(self, LAWD_CD, DEAL_YMD):
+    #     json_data = self.DataReader(LAWD_CD, DEAL_YMD)
+    #     return self.__json2pd(json_data)
+
+    # def __json2pd(self, json_data):
+
+    #     items = json_data['response']['body']['items']
+    #     if items is None:
+    #         return pd.DataFrame()
+
+    #     datas = items['item']
+    #     output = pd.DataFrame(columns=datas[0].keys())
+    #     for data in datas :
+    #         output = output.append(data, ignore_index=True)
+
+    #     return output.copy()
 
 
 def main():
     apt = AptDetailReader()
-    df_data = apt.DataReader("41135", "201911")
-    print(df_data.head())
+    json_data = apt.DataReader("41135", "201911")
+
+    with open("output.json", "w", encoding="utf-8") as make_file:
+        json.dump(json_data, make_file, ensure_ascii=False, indent="\t")
 
 if __name__ == "__main__":
     main()
