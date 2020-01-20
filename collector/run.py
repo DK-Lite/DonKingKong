@@ -2,6 +2,9 @@ import requests
 import json, argparse, xmltodict
 from Loader import Loader
 from AptDetail import *
+from datetime import datetime
+
+
 
 #from bson.json_util import loads, dumps
 # record = db.movies.find_one()
@@ -9,22 +12,27 @@ from AptDetail import *
 # record2 = loads(json_str)
 
 def main():
+
+    now = datetime.now()
+    cur_date = now.strftime('%Y%m')
+
     # argument 
     arg = argparse.ArgumentParser()
-    arg.add_argument('--date', type=str, default='-1')
+    arg.add_argument('--date', type=str, default=cur_date)
     args=arg.parse_args()
-
+    
+    print(args.date)
     # Loader 
     codes = Loader.get_codes()
     configs = Loader.get_configs()
 
-    # data set
-    apt = AptDetailReader(configs['service_key'])
-    for code in codes:
-        items = apt.DataReader(code, args.date)
-        if items is None: continue
-        for item in items:
-            requests.post("http://localhost:3691/data-lake/apt-trade-info", data=item)
+    # # data set
+    # apt = AptDetailReader(configs['service_key'])
+    # for code in codes:
+    #     items = apt.DataReader(code, args.date)
+    #     if items is None: continue
+    #     for item in items:
+    #         requests.post("http://localhost:3691/data-lake/apt-trade-info", data=item)
 	
 
     #df_data = pd.concat([ apt.DataReader(code, args.date) for code in codes ], ignore_index=True)
