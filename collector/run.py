@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 def main():
 
-    now = datetime.now() - timedelta(days=20)
+    now = datetime.now() - timedelta(days=15)
     cur_date = now.strftime('%Y%m') 
 
     # argument 
