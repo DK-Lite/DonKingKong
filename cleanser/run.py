@@ -13,15 +13,20 @@ def cleanText(readData):
 def main():
     client = MongoClient("34.84.195.184", 17017)
 
+    # find
     db = client.data_lake
     colloction = db.apt_trade_info
-    cursor = colloction.find()
+    cursor = colloction.find({'is_clean': { '$exists': False }})
     docs = [ doc for idx, doc in enumerate(cursor)]
-    
+
+    # update
+    colloction.update({'is_clean': { '$exists': False }}, { "$set": { 'is_clean' : 1 }}, multi=True)    
+
+    # cleansing
     clean_docs = []
     for doc in docs:
         clean_docs.append({
-            'trade_value' : doc['거래금액'],
+            'trade_value' : cleanText(doc['거래금액']),
             'build_year' : doc['건축년도'],
             'law_name' : doc['법정동'],
             'dedicated_area': doc['전용면적'],
@@ -31,6 +36,7 @@ def main():
             'trade_day': doc['일'],
         })
 
+    # insert
     db = client.data_warehouse
     collection = db.apt_trade_info
     for doc in tqdm_notebook(clean_docs):
