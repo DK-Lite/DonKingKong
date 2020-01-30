@@ -24,7 +24,7 @@ def main():
     codes = Loader.get_codes()
     configs = Loader.get_configs()
 
-    data set
+    #data set
     apt = AptDetailReader(configs['service_key'])
     for code in codes:
        items = apt.DataReader(code, args.date)
