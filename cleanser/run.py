@@ -3,7 +3,6 @@
 # set data
 import re
 from pymongo import MongoClient
-from tqdm import tqdm_notebook
 
 
 def cleanText(readData):
@@ -16,7 +15,7 @@ def main():
     # find
     db = client.data_lake
     colloction = db.apt_trade_info
-    cursor = colloction.find({'is_clean': { '$exists': False }})
+    cursor = colloction.find({'is_clean': { '$exists': True }})
     docs = [ doc for idx, doc in enumerate(cursor)]
 
     # update
@@ -39,7 +38,7 @@ def main():
     # insert
     db = client.data_warehouse
     collection = db.apt_trade_info
-    for doc in tqdm_notebook(clean_docs):
+    for doc in clean_docs:
         collection.insert(doc)
     client.close()
 
