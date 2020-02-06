@@ -48,7 +48,7 @@ def main():
     # insert
     db = client.data_warehouse
     collection = db.apt_trade_info
-    for doc in tqdm_notebook(clean_docs):
+    for doc in clean_docs:
         collection.insert(doc)
     client.close()
 
