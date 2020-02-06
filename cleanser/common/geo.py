@@ -37,7 +37,7 @@ def tm128_to_grs80(x, y):
    return transform( Proj(**TM128), Proj(**GRS80), x, y )
 
 def utmk_to_grs80(x, y):
-   return transform( Proj(init='epsg:5178'), Proj(init='epsg:4326'), x, y )
+   return transform( Proj(init='epsg:5178'), Proj(init='EPSG:4004'), x, y )
 
 
 
