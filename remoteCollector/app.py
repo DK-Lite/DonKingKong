@@ -44,6 +44,16 @@ def GetDataWarehouse():
     client.close()
     return { 'info': docs }
 
+@app.route("/data-warehouse/apt-unique-info", methods=['GET'])
+def GetAptUniInfo():
+    client = MongoClient("localhost", 17017)
+    db = client.data_warehouse
+    collection = db.apt_unique_info
+    cursor = collection.find()
+    docs = [ change_key(doc,'_id', idx) for idx, doc in enumerate(cursor)]
+    client.close()
+    return { 'info': docs }
+
 
 if __name__=='__main__':
     app.run(debug=True, host='0.0.0.0', port='3691')
