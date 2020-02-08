@@ -1,0 +1,1 @@
+export const SET_DATA_LIST = '@map/SET_DATA_LIST';

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-
+//Redux
+import { connect } from 'react-redux';
+import { actions as mapActions } from '../ducks/Map';
 
 declare var kakao:any;
 
@@ -14,14 +16,15 @@ const CustomMap = styled.div`
     z-index: 0;
 `
 
-function Map(){
+function Map(props){
+    const { data } = props // state
+    const { setData } = props // actions
 
     const [tmp, setTmp] = useState([]);
     const [kakaoMap, setkakaoMap] = useState();
+    const [dataList, setdataList] = useState([]);
     
     useEffect(()=>{
-        const el = document.getElementById('map');
-        
         getAptUniqueInfo()
     },[])
 
@@ -32,6 +35,8 @@ function Map(){
         const positions = tmp.map( data => ({ 
             title: data.apt_name,
             latlng: new kakao.maps.LatLng(data.latitudes, data.longitude),
+            road_city_code: data.road_city_code,
+            road_code: data.road_code,
         }))
          
         var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
@@ -49,13 +54,25 @@ function Map(){
                 map: kamap, // 마커를 표시할 지도
                 position: positions[i].latlng,
                 title : positions[i].title,
-                image : markerImage  
-            });
-        }
+                image : markerImage,  
+                content: positions[i].road_city_code, 
     
+            });
+            var uniqueKey = ({
+                road_city_code: positions[i].road_city_code,
+                road_code : positions[i].road_code,
+            });
+
+            (function(marker, uniqueKey) {
+                kakao.maps.event.addListener(marker, 'click', function() {
+                    console.log(uniqueKey)
+                    getAptInfo(uniqueKey)
+                });
+            })(marker, uniqueKey);
+
+        }
         setkakaoMap(kamap)
     },[tmp])
-
 
 
     console.log("render")
@@ -66,13 +83,24 @@ function Map(){
         .catch(error => console.log(error))
     }
 
-
+    const getAptInfo=(uniqueKey)=>{
+        axios.post("http://34.84.195.184:3691/data-warehouse/apt-unique-info/apt-info", uniqueKey)
+        .then(response => setData(response.data.info))
+        .catch(error => console.log(error))
+    }
+   
     return (
         <React.Fragment>
             <CustomMap className='Map' id="map" />
+
         </React.Fragment>
     )
 
 }
 
-export default Map;
+
+export default connect(
+    state => state.map,
+    mapActions
+)(Map);
+//export default Map;

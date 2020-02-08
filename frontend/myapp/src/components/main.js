@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Map from './Map'
+import { connect } from 'react-redux';
 
 
 const RootDiv = styled.div`
@@ -84,60 +85,14 @@ const ChartCard = styled.div`
     padding: 10px 0px 0px 0px;
 `
 
-// const HeadDiv = styled.div`
-//     width: 100%;
-//     height: 100px;
-//     background: white;
-//     border: 1px dotted;
-//     border-radius: 10px;
-//     display: flex;
-//     align-items: center;
-// `
-
-// const MiddleDiv = styled.div`
-//     width: 100%;
-//     background: white;
-//     border: 1px dotted;
-//     border-radius: 10px;
-//     display: flex;
-// `
-
-// const MenuDiv = styled.div`
-//     width: 200px;
-//     height: 700px;
-//     background: white;
-//     border: 1px dotted;
-//     border-radius: 10px;
-//     float:left;
-// `
-
-// const MapDiv = styled.div`
-//     width: 700px;
-//     height: 700px;
-//     background: white;
-//     display: block;
-//     border: 1px dotted;
-//     border-radius: 10px;
-//     float:left;
-// `
-// const ChartDiv = styled.div`
-//     background: white;
-//     display: block;
-//     border: 1px dotted;
-//     border-radius: 10px;
-//     float:left;
-// `
-
-// const CustomMap = styled(Map)`
-//     width: 100%;
-//     height: 50px;
-//     border-radius: 50px;
-// `
 
 
+function MainView(props){
+    const { data } = props; // state
+    console.log(data)
+    const dataLists = data.map( x => 
+        (<div>{x.apt_name+" "+x.trade_year+"/"+x.trade_month+"/"+x.trade_day+" "+ x.trade_value+"0000원"}</div>))
 
-function MainView(){
-    
     return (
         <RootDiv>
             <MenuDiv>
@@ -149,13 +104,10 @@ function MainView(){
                         <Map></Map>
                     </MapDiv>
                     <InfoDiv>
-                        <CustomCard />
-                        <CustomCard />
-                        <CustomCard />
+                        {dataLists}
                     </InfoDiv>
                 </ContentsDiv>
                 <AnalyDiv>
-                    <ChartCard></ChartCard>
                     <ChartCard></ChartCard>
                 </AnalyDiv>
             </MainDiv>
@@ -163,4 +115,8 @@ function MainView(){
     )
 }
 
-export default MainView;
+export default connect(
+    state => state.map,
+    null
+)(MainView)
+//export default MainView;
