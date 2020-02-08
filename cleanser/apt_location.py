@@ -54,7 +54,7 @@ def main():
     # find
     db = client.data_warehouse
     colloction = db.apt_unique_info
-    cursor = colloction.find({'longitude': { '$exists': False }})
+    cursor = colloction.find()
     docs = [ doc for idx, doc in enumerate(cursor)]
 
     # cleansing
