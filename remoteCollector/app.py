@@ -54,6 +54,19 @@ def GetAptUniInfo():
     client.close()
     return { 'info': docs }
 
+@app.route("/data-warehouse/apt-unique-info/apt-info", methods=['POST'])
+def GetAPTInfoFrom():
+    client = MongoClient("localhost", 17017)
+    db = client.data_warehouse
+    collection = db.apt_trade_info
+    print(request.form.to_dict())
+    cursor = collection.find()
+    docs = [ change_key(doc,'_id', idx) for idx, doc in enumerate(cursor)]
+    client.close()
+    return { 'info': docs }
+
+
+
 
 if __name__=='__main__':
     app.run(debug=True, host='0.0.0.0', port='3691')

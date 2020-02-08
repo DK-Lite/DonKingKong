@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Map from './components/Map';
+import MainView from './components/main';
 
 function App() {
   return (
     <div>
-      <Map></Map>
+      <MainView></MainView>
     </div>
   );
 }
