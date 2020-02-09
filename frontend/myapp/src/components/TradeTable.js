@@ -15,6 +15,10 @@ function pad(n, width) {
 function TradeTable(props){
     const { data } = props;
 
+    let dataName = "";
+    if (data.length > 0){
+        dataName = data[0].apt_name;
+    }
     const dataLists = data.map( x => 
         ({
             ymd: x.trade_year+"-"+pad(x.trade_month, 2)+"-"+pad(x.trade_day, 2),
@@ -23,15 +27,15 @@ function TradeTable(props){
         }))
 
     return (
-        <div style={{ width: '700px'}}>
+       
             <MaterialTable
             maxBodyHeight='660px'
-            style={{ height: '660px'}}
-            title={"신당역솔하임"}
+            style={{ width: '380px', height: '660px', zIndx: 0}}
+            title={dataName}
             columns={[
-                { title: '거래 일', field: 'ymd' },
-                { title: '거래 가격', field: 'value' },
-                { title: '면적', field: 'area' },
+                { title: 'Date', field: 'ymd' },
+                { title: 'Price', field: 'value' },
+                { title: 'Area', field: 'area' },
             ]}
             data={dataLists}
             options={{
@@ -43,7 +47,6 @@ function TradeTable(props){
                 sorting: true,
               }}      
             />
-        </div>
     )
 }
 

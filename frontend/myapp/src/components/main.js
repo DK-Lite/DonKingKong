@@ -42,11 +42,10 @@ const ContentsDiv = styled.div`
     padding: 70px 0px 0px 0px;
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
 `
 
 const MapDiv = styled.div`
-    width: 50%;
     padding: 10px;
     background: white;
     display: flex;
@@ -54,7 +53,6 @@ const MapDiv = styled.div`
 `
 
 const InfoDiv = styled.div`
-    width: 50%;
     background: white;
     padding: 10px;
     display: flex;
@@ -99,9 +97,7 @@ const ChartCard = styled.div`
 function MainView(props){
     const { data } = props; // state
     console.log(data)
-    const dataLists = data.map( x => 
-        (<div>{x.apt_name+" "+x.trade_year+"/"+x.trade_month+"/"+x.trade_day+" "+ x.trade_value+"0000원"}</div>))
-
+ 
     return (
         <RootDiv>
             <MenuDiv>

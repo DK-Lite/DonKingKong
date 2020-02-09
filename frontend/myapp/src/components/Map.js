@@ -65,7 +65,6 @@ function Map(props){
 
             (function(marker, uniqueKey) {
                 kakao.maps.event.addListener(marker, 'click', function() {
-                    console.log(uniqueKey)
                     getAptInfo(uniqueKey)
                 });
             })(marker, uniqueKey);
@@ -74,8 +73,6 @@ function Map(props){
         setkakaoMap(kamap)
     },[tmp])
 
-
-    console.log("render")
 
     const getAptUniqueInfo=()=>{
         axios.get("http://34.84.195.184:3691/data-warehouse/apt-unique-info")
