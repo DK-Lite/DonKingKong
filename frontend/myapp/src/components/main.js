@@ -1,7 +1,15 @@
+// Standard
 import React from 'react';
 import styled from 'styled-components';
-import Map from './Map'
+
+// Custom
+import Map from './Map';
+import TradeTable from './TradeTable';
+
+// Redux
 import { connect } from 'react-redux';
+
+
 
 
 const RootDiv = styled.div`
@@ -48,6 +56,7 @@ const MapDiv = styled.div`
 const InfoDiv = styled.div`
     width: 50%;
     background: white;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -104,7 +113,7 @@ function MainView(props){
                         <Map></Map>
                     </MapDiv>
                     <InfoDiv>
-                        {dataLists}
+                        <TradeTable/>
                     </InfoDiv>
                 </ContentsDiv>
                 <AnalyDiv>

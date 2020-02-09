@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import 
 
 const ChartCard = styled.div`
     width: 1400px;
