@@ -2,4 +2,4 @@ echo "Start Cleanser"
 python3 apt_trade_info.py
 python3 apt_unique_info.py
 python3 apt_location_mapping.py
-ecoh "End"
+echo "End"
