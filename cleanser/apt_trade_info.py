@@ -3,7 +3,6 @@
 # set data
 import re
 from pymongo import MongoClient
-from tqdm import tqdm_notebook
 
 
 def cleanText(readData):
