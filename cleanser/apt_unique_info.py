@@ -14,7 +14,7 @@ def change_key(dic, key, value):
     return dic
 
 def main():
-    client = MongoClient("34.84.195.184", 17017)
+    client = MongoClient("34.84.195.184", 27017)
 
     # find
     db = client.data_warehouse
