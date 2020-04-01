@@ -5,7 +5,6 @@ import pandas as pd
 from os import path
 from urllib.parse import quote_plus, urlencode
 from urllib.request import urlopen, Request
-from tqdm import tqdm_notebook
 from common.geo import *
 from pymongo import MongoClient
 
