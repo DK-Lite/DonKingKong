@@ -44,7 +44,6 @@ def main():
        items = apt.DataReader(code, args.date)
        if items is None: continue
        result += items
-       break
        
     with open(PATH, "w", encoding="utf-8") as make_file:
         json.dump(result, make_file, ensure_ascii=False, indent="\t")
