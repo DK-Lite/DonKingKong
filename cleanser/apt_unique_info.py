@@ -5,6 +5,10 @@ import pandas as pd
 from os import path
 from pymongo import MongoClient
 
+
+DB_HOST="35.238.148.116"
+DB_PORT=27017
+
 def cleanText(readData):
     text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', readData)
     return text
@@ -14,7 +18,7 @@ def change_key(dic, key, value):
     return dic
 
 def main():
-    client = MongoClient("34.84.195.184", 27017)
+    client = MongoClient(DB_HOST, DB_PORT)
 
     # find
     db = client.data_warehouse
