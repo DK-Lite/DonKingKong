@@ -1,5 +1,8 @@
 echo "Start"
-./collector/execute
-./cleanser/execute
-#./analyzer/execute
+
+SCRIPT_DIR="$(realpath "$(dirname "$BASH_SOURCE")")"
+
+${SCRIPT_DIR}/collector/execute
+${SCRIPT_DIR}//cleanser/execute
+#${SCRIPT_DIR}//analyzer/execute
 echo "End"

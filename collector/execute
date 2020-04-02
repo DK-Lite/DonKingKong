@@ -1,4 +1,8 @@
 echo "Start Collector"
-python3 collector.py
-python3 consumer.py
+
+SCRIPT_DIR="$(realpath "$(dirname "$BASH_SOURCE")")"
+
+python3 ${SCRIPT_DIR}/collector.py
+python3 ${SCRIPT_DIR}/consumer.py
+
 echo "End"

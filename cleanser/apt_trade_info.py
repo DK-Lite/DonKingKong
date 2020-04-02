@@ -5,7 +5,7 @@ import re
 from pymongo import MongoClient
 
 DB_HOST="35.238.148.116"
-DB_PORT
+DB_PORT=27017
 
 def cleanText(readData):
     text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', readData)
