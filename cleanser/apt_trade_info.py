@@ -4,7 +4,7 @@
 import re
 from pymongo import MongoClient
 
-DB_HOST="35.238.148.116"
+DB_HOST="localhost"
 DB_PORT=27017
 
 def cleanText(readData):

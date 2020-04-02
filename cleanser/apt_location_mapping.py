@@ -8,7 +8,7 @@ from urllib.request import urlopen, Request
 from common.geo import *
 from pymongo import MongoClient
 
-DB_HOST="35.238.148.116"
+DB_HOST="localhost"
 DB_PORT=27017
 class AptLocationAPI:
     URL = 'http://www.juso.go.kr/addrlink/addrCoordApi.do'

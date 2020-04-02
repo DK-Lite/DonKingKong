@@ -1,7 +1,7 @@
 import os, json
 from pymongo import MongoClient
 
-DB_HOST     = "35.238.148.116"
+DB_HOST     = "localhost"
 DB_PORT     = 27017
 ABS_PATH    = os.path.dirname(os.path.realpath(__file__))
 PATH        = os.path.join(ABS_PATH, "data")
