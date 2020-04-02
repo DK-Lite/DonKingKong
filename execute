@@ -1,0 +1,5 @@
+echo "Start"
+./collector/execute
+./cleanser/execute
+#./analyzer/execute
+echo "End"

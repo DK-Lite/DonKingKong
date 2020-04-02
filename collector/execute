@@ -1,0 +1,4 @@
+echo "Start Collector"
+python3 collector.py
+python3 consumer.py
+echo "End"
