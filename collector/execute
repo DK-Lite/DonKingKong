@@ -1,8 +1,10 @@
-echo "Start Collector"
+echo "[Collector - Start]"
 
 SCRIPT_DIR="$(realpath "$(dirname "$BASH_SOURCE")")"
 
+echo "[Collector - collector.py]"
 python3 ${SCRIPT_DIR}/collector.py
+echo "[Collector - consumer.py]"
 python3 ${SCRIPT_DIR}/consumer.py
 
-echo "End"
+echo "[Collector - End]"

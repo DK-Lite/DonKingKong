@@ -4,6 +4,7 @@ import pandas
 from Loader import Loader
 from AptDetail import *
 from datetime import datetime, timedelta
+from tqdm.notebook import tqdm
 
 def main():
 
@@ -23,7 +24,8 @@ def main():
             cur_date = dt
             break
 
-    print(cur_date)
+    print(f"Calling the data with {cur_date}") 
+
     PATH = os.path.join(abs_path,'data/'+str(cur_date)+'.json')
 
     # argument 
@@ -31,7 +33,6 @@ def main():
     arg.add_argument('--date', type=str, default=cur_date)
     args=arg.parse_args()
     
-
     # Loader 
     codes = Loader.get_codes()
     configs = Loader.get_configs()
@@ -40,7 +41,8 @@ def main():
     apt = AptDetailReader(configs['service_key'])
 
     result = []
-    for code in codes:
+    print("[Running...]")
+    for code in tqdm(codes):
        items = apt.DataReader(code, args.date)
        if items is None: continue
        result += items

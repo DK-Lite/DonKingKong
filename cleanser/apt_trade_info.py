@@ -6,45 +6,58 @@ from pymongo import MongoClient
 
 DB_HOST="localhost"
 DB_PORT=27017
+LOAD_DATA_SIZE=1000
 
 def cleanText(readData):
     text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', readData)
     return text
 
 def main():
-    client = MongoClient(DB_HOST, DB_PORT)
+
+    # MongoDB
+    try:   
+        client = MongoClient(DB_HOST, DB_PORT)
+        print("[Connect]: Data Lake")
+    except Exception:
+        print("[Connect]: Error")
 
     # find
     db = client.data_lake
     colloction = db.apt_trade_info
-    cursor = colloction.find({'is_clean': { '$exists': False }})
-    docs = [ doc for idx, doc in enumerate(cursor)]
 
-    # update
-    colloction.update({'is_clean': { '$exists': False }}, { "$set": { 'is_clean' : 1 }}, multi=True)    
+    #{ $pop: { 필드1: ±1, 필드2: ±1, ... } }
+    while(True):
+        cursor = colloction.find({'clean': { '$exists': False }}).limit(LOAD_DATA_SIZE)
+        docs = [ doc for idx, doc in enumerate(cursor)]
+        cursor.
+        if docs.count < 0 : break
+        print(f"[Load] {docs.count} uncleaned files ")
 
-    # cleansing
-    clean_docs = []
-    for doc in docs:
-        try:
-            clean_docs.append({
-                'trade_value' : cleanText(doc['거래금액']),
-                'build_year' : doc['건축년도'],
-                'law_name' : doc['법정동'],
-                'dedicated_area': doc['전용면적'],
-                'apt_name' : cleanText(doc['아파트']),
-                'trade_year': doc['년'],
-                'trade_month': doc['월'],
-                'trade_day': doc['일'],
-                'road_city_code': doc['도로명시군구코드'],
-                'law_town_code': doc['법정동읍면동코드'],
-                'road_code': doc['도로명코드'],
-                'road_ground_code': doc['도로명지상지하코드'],
-                'road_main_code': doc['도로명건물본번호코드'],
-                'road_sub_code': doc['도로명건물부번호코드'],
-            })
-        except:
-            print(doc)
+        # cleansing
+        clean_docs = []
+        for doc in docs:
+            try:
+                clean_docs.append({
+                    'tradeValue' : cleanText(doc['거래금액']),
+                    'buildYear' : doc['건축년도'],
+                    'lawName' : doc['법정동'],
+                    'dedicatedArea': doc['전용면적'],
+                    'aptName' : cleanText(doc['아파트']),
+                    'tradeYear': doc['년'],
+                    'tradeMonth': doc['월'],
+                    'tradeDay': doc['일'],
+                    'roadCityCode': doc['도로명시군구코드'],
+                    'lawTownCode': doc['법정동읍면동코드'],
+                    'roadCode': doc['도로명코드'],
+                    'roadGroundCode': doc['도로명지상지하코드'],
+                    'roadMainCode': doc['도로명건물본번호코드'],
+                    'roadSubCode': doc['도로명건물부번호코드'],
+                })
+            except Exception:
+                #print(doc)
+                pass
+
+        colloction.update({'clean': { '$exists': False }}, { "$set": { 'clean' : 1 }}, multi=True)
 
     # insert
     db = client.data_warehouse

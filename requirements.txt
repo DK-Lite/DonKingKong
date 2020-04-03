@@ -2,3 +2,4 @@ pyproj
 pymongo
 xmltodict
 pandas
+tqdm

@@ -1,9 +1,14 @@
-echo "Start Cleanser"
+echo "[Cleanser - Start]"
 
 SCRIPT_DIR="$(realpath "$(dirname "$BASH_SOURCE")")"
 
+echo "[Cleanser - apt_trade_info.py]"
 python3 ${SCRIPT_DIR}/apt_trade_info.py
+
+echo "[Cleanser - apt_unique_info.py]"
 python3 ${SCRIPT_DIR}/apt_unique_info.py
+
+echo "[Cleanser - apt_location_mapping.py]"
 python3 ${SCRIPT_DIR}/apt_location_mapping.py
 
-echo "End"
+echo "[Cleanser - End]"
