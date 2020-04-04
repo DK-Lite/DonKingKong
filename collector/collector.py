@@ -4,7 +4,7 @@ import pandas
 from Loader import Loader
 from AptDetail import *
 from datetime import datetime, timedelta
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 
 def main():
 
@@ -46,6 +46,7 @@ def main():
        items = apt.DataReader(code, args.date)
        if items is None: continue
        result += items
+       break
        
     with open(PATH, "w", encoding="utf-8") as make_file:
         json.dump(result, make_file, ensure_ascii=False, indent="\t")

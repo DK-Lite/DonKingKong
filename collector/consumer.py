@@ -1,6 +1,6 @@
 import os, json
 from pymongo import MongoClient
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 
 DB_HOST     = "localhost"
 DB_PORT     = 27017
