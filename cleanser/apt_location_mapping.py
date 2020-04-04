@@ -67,11 +67,11 @@ def main():
     for doc in tqdm(docs):
         time.sleep(1)
         inputs = {
-            'admCd' : doc['road_city_code'] + doc['law_town_code'],
-            'rnMgtSn' : doc['road_city_code'] + doc['road_code'],
-            'udrtYn' : doc['road_ground_code'],
-            'buldMnnm' : doc['road_main_code'],
-            'buldSlno' : doc['road_sub_code'],
+            'admCd' : doc['roadCityCode'] + doc['lawTownCode'],
+            'rnMgtSn' : doc['roadCityCode'] + doc['roadCode'],
+            'udrtYn' : doc['roadGroundCode'],
+            'buldMnnm' : doc['roadMainCode'],
+            'buldSlno' : doc['roadSubCode'],
         } 
         apt.DataReader(**inputs)
         longitude, latitudes = apt.getXY()

@@ -42,23 +42,25 @@ def main():
             upsert= False,
             #'bypassDocumentValidation': False
         )
-        
-#        collection_warehouse.insert_many({
-#            'tradeValue' : cleanText(doc['거래금액']),
-#            'buildYear' : doc['건축년도'],
-#            'lawName' : doc['법정동'],
-#            'dedicatedArea': doc['전용면적'],
-#            'aptName' : cleanText(doc['아파트']),
-#            'tradeYear': doc['년'],
-#            'tradeMonth': doc['월'],
-#            'tradeDay': doc['일'],
-#            'roadCityCode': doc['도로명시군구코드'],
-#            'lawTownCode': doc['법정동읍면동코드'],
-#            'roadCode': doc['도로명코드'],
-#            'roadGroundCode': doc['도로명지상지하코드'],
-#            'roadMainCode': doc['도로명건물본번호코드'],
-#            'roadSubCode': doc['도로명건물부번호코드'],
-#        })
+        try:        
+            collection_warehouse.insert({
+            'tradeValue' : cleanText(doc['거래금액']),
+            'buildYear' : doc['건축년도'],
+            'lawName' : doc['법정동'],
+            'dedicatedArea': doc['전용면적'],
+            'aptName' : cleanText(doc['아파트']),
+            'tradeYear': doc['년'],
+            'tradeMonth': doc['월'],
+            'tradeDay': doc['일'],
+            'roadCityCode': doc['도로명시군구코드'],
+            'lawTownCode': doc['법정동읍면동코드'],
+            'roadCode': doc['도로명코드'],
+            'roadGroundCode': doc['도로명지상지하코드'],
+            'roadMainCode': doc['도로명건물본번호코드'],
+            'roadSubCode': doc['도로명건물부번호코드']
+            })
+        except Exception:
+            pass
 
     client.close()
 
