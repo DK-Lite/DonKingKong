@@ -16,7 +16,7 @@ def main():
     # MongoDB
     try:   
         client = MongoClient(DB_HOST, DB_PORT)
-        print("[Connect]: Data Lake")
+        print("[Connect]: MongoDB")
     except Exception:
         print("[Connect]: Error")
 

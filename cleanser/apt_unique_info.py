@@ -18,9 +18,15 @@ def change_key(dic, key, value):
     return dic
 
 def main():
-    client = MongoClient(DB_HOST, DB_PORT)
 
-    # find
+    # MongoDB
+    try:   
+        client = MongoClient(DB_HOST, DB_PORT)
+        print("[Connect]: MongoDB")
+    except Exception:
+        print("[Connect]: Error")
+
+    # Find
     db = client.data_warehouse
     colloction = db.apt_trade_info
     cursor = colloction.find()
@@ -31,17 +37,17 @@ def main():
     # cleanser
     output = dict()
     for doc in docs:
-        key = doc['road_city_code'] + doc['road_code']
+        key = doc['roadCityCode'] + doc['roadCode']
         output[key] = {
-            "build_year": doc["build_year"],
-            "law_name": doc["law_name"],
-            "apt_name": doc["apt_name"],
-            "law_town_code": doc["law_town_code"],
-            "road_city_code": doc["road_city_code"],
-            "road_code": doc["road_code"],
-            "road_ground_code": doc["road_ground_code"],
-            "road_main_code": doc["road_main_code"],
-            "road_sub_code": doc["road_sub_code"],
+            "buildYear": doc["buildYear"],
+            "lawName": doc["lawName"],
+            "aptName": doc["aptName"],
+            "lawTownCode": doc["lawTownCode"],
+            "roadCityCode": doc["roadCityCode"],
+            "roadCode": doc["roadCode"],
+            "roadGroundCode": doc["roadGroundCode"],
+            "roadMainCode": doc["roadMainCode"],
+            "roadSubCode": doc["roadSubCode"],
         }
     
     print("apt count : " + str(len(output.keys())))
