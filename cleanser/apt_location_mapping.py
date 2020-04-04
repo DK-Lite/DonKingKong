@@ -7,6 +7,7 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import urlopen, Request
 from common.geo import *
 from pymongo import MongoClient
+from tqdm import tqdm
 
 DB_HOST="localhost"
 DB_PORT=27017
@@ -50,7 +51,11 @@ class AptLocationAPI:
 def main():
 
     apt = AptLocationAPI("devU01TX0FVVEgyMDIwMDIwNjIzMDE1MjEwOTQ0NzQ=")
-    client = MongoClient(DB_HOST, DB_PORT)
+    try:
+        client = MongoClient(DB_HOST, DB_PORT)
+        print("Connect: MongoDB")
+    except Exception:
+        print("Connect: Error")
 
     # find
     db = client.data_warehouse
@@ -59,7 +64,7 @@ def main():
     docs = [ doc for idx, doc in enumerate(cursor)]
 
     # cleansing
-    for doc in docs:
+    for doc in tqdm(docs):
         time.sleep(1)
         inputs = {
             'admCd' : doc['road_city_code'] + doc['law_town_code'],

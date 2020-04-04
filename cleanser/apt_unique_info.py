@@ -4,7 +4,7 @@ import xmltodict
 import pandas as pd
 from os import path
 from pymongo import MongoClient
-
+from tqdm import tqdm
 
 DB_HOST="localhost"
 DB_PORT=27017
@@ -22,9 +22,9 @@ def main():
     # MongoDB
     try:   
         client = MongoClient(DB_HOST, DB_PORT)
-        print("[Connect]: MongoDB")
+        print("Connect: MongoDB")
     except Exception:
-        print("[Connect]: Error")
+        print("Connect: Error")
 
     # Find
     db = client.data_warehouse
@@ -32,11 +32,11 @@ def main():
     cursor = colloction.find()
     docs = [ change_key(doc,'_id', idx) for idx, doc in enumerate(cursor)]
 
-    print("all trade count : " + str(len(docs)))
+    print(f"get a total of {len(docs)} data warehouse")
     
     # cleanser
     output = dict()
-    for doc in docs:
+    for doc in tqdm(docs):
         key = doc['roadCityCode'] + doc['roadCode']
         output[key] = {
             "buildYear": doc["buildYear"],
@@ -50,7 +50,6 @@ def main():
             "roadSubCode": doc["roadSubCode"],
         }
     
-    print("apt count : " + str(len(output.keys())))
 
     # insert
     db = client.data_warehouse

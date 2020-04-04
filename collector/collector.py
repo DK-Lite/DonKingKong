@@ -41,7 +41,7 @@ def main():
     apt = AptDetailReader(configs['service_key'])
 
     result = []
-    print("[Running...]")
+    print("Running...")
     for code in tqdm(codes):
        items = apt.DataReader(code, args.date)
        if items is None: continue

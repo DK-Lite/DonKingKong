@@ -16,9 +16,9 @@ def main():
     # MongoDB
     try:   
         client = MongoClient(DB_HOST, DB_PORT)
-        print("[Connect]: MongoDB")
+        print("Connect: MongoDB")
     except Exception:
-        print("[Connect]: Error")
+        print("Connect: Error")
 
     db = client.data_lake
     collection = db.apt_trade_info
@@ -27,15 +27,15 @@ def main():
     # get json_file_list in DIR (LOCAL)
     all_files = os.listdir(PATH)
     json_files = [ file for file in all_files if file.endswith(".json")]
-    print(f"[Load]: Get a total of {json_files.count} files(.json) from system")
+    print(f"Load: Get a total of {len(json_files)} files(.json) from system")
 
     # get date_list in DB (MongoDB)
     cursor = collection_date.find()
     docs = [ change_key(doc,'_id', idx)['filename'] for idx, doc in enumerate(cursor)]
-    print(f"[Load]: Get a total of {docs.count} date lists from mongoDB")
+    print(f"Load: Get a total of {len(docs)} date lists from mongoDB")
 
     # Loader 
-    print("[Running...]")
+    print("Running...")
     for file in tqdm(json_files):
 
         # isExist?
