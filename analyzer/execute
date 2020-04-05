@@ -1,3 +1,9 @@
-echo "Start Analyzer"
 
-echo "End"
+echo "[Aalyzer - Start]"
+
+SCRIPT_DIR="$(realpath "$(dirname "$BASH_SOURCE")")"
+
+echo "[Aalyzer - apt_trade_month_avg.py]"
+python3 ${SCRIPT_DIR}/apt_trade_month_avg.py
+
+echo "[Aalyzer - End]"
