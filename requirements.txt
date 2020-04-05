@@ -1,5 +1,5 @@
 pyproj
 pymongo
 xmltodict
-pandas
+pandas==0.24.2
 tqdm
