@@ -5,7 +5,7 @@ import pandas as pd
 from pymongo import MongoClient
 from tqdm import tqdm
 
-DB_HOST="49.50.172.234"
+DB_HOST="localhost"
 DB_PORT=27017
 
 
