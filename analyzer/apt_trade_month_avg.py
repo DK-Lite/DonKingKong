@@ -33,12 +33,15 @@ def main():
         '$group': { 
             '_id': { 
                 'day': { '$concat': ['$tradeYear', '-', '$tradeMonth'] }, 
-                'name': "$aptName", 
+            #   'name': "$aptName", 
                 'area': '$dedicatedArea', 
-                'roadCityCode': '$roadCityCode',
-                'roadCode': '$roadCode',
-            }, 
+            #    'roadCityCode': '$roadCityCode',
+            #    'roadCode': '$roadCode',
+            },
+            'aptName': { '$max' : '$aptName' },
             'value': { '$avg': { '$toInt' : '$tradeValue'} },
+            'roadCityCode': { '$max' : '$roadCityCode'} ,
+            'roadCode': {'$max' : '$roadCode'} ,
         }
     })
 
