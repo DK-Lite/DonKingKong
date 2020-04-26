@@ -26,36 +26,35 @@ def main():
     except Exception:
         print("Connect: Error")
 
-    # Find
+    # Find (Test)
+    
+    pipelines = list()
+    pipelines.append({ 
+        '$group': { 
+            '_id': { 
+                'day': { '$concat': ['$roadCityCode', '$roadCode'] }, ,
+            },
+            "buildYear": {'$max' : '$buildYear'},
+            "lawName": {'$max' : '$lawName'},
+            "aptName": {'$max' : '$aptName'},
+            "lawTownCode": {'$max' : '$lawTownCode'},
+            "roadCityCode": {'$max' : '$roadCityCode'},
+            "roadCode": {'$max' : '$roadCode'},
+            "roadGroundCode": {'$max' : '$roadGroundCode'},
+            "roadMainCode": {'$max' : '$roadMainCode'},
+            "roadSubCode": {'$max' : '$roadSubCode'},    
+        }
+    })
+
     db = client.data_warehouse
     colloction = db.apt_trade_info
-    cursor = colloction.find()
+    cursor = db.apt_trade_info.aggregate(pipelines)
     docs = [ change_key(doc,'_id', idx) for idx, doc in enumerate(cursor)]
-
-    print(f"get a total of {len(docs)} data warehouse")
-    
-    # cleanser
-    output = dict()
-    for doc in tqdm(docs):
-        key = doc['roadCityCode'] + doc['roadCode']
-        output[key] = {
-            "buildYear": doc["buildYear"],
-            "lawName": doc["lawName"],
-            "aptName": doc["aptName"],
-            "lawTownCode": doc["lawTownCode"],
-            "roadCityCode": doc["roadCityCode"],
-            "roadCode": doc["roadCode"],
-            "roadGroundCode": doc["roadGroundCode"],
-            "roadMainCode": doc["roadMainCode"],
-            "roadSubCode": doc["roadSubCode"],
-        }
-    
 
     # insert
     db = client.data_warehouse
     collection = db.apt_unique_info
-    for _, doc in output.items():
-        collection.insert(doc)
+    collection.insert_many(docs)
         
     client.close()
 
