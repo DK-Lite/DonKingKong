@@ -32,7 +32,7 @@ def main():
     pipelines.append({ 
         '$group': { 
             '_id': { 
-                'day': { '$concat': ['$roadCityCode', '$roadCode'] }, ,
+                'day': { '$concat': ['$roadCityCode', '$roadCode'] },
             },
             "buildYear": {'$max' : '$buildYear'},
             "lawName": {'$max' : '$lawName'},
@@ -50,11 +50,19 @@ def main():
     colloction = db.apt_trade_info
     cursor = db.apt_trade_info.aggregate(pipelines)
     docs = [ change_key(doc,'_id', idx) for idx, doc in enumerate(cursor)]
-
+    print("Group Count: "+len(docs))
     # insert
     db = client.data_warehouse
     collection = db.apt_unique_info
-    collection.insert_many(docs)
+    for doc in tqdm(docs):
+        cur = collection.find_one({
+            'roadCityCode':doc['roadCityCode'],
+            'roadCode':doc['roadCode'],
+            })
+        if not cur is None: continue
+        
+        collection.insert(doc)
+       
         
     client.close()
 
